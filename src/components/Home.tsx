@@ -23,7 +23,7 @@ export default function Home() {
         { username, password }
       );
       if (response.data.success && response.data.user) {
-        // Store only the username (admin table contains username and password)
+        // Store only the username (from the admin table)
         setUser({ username: response.data.user.username, password });
         navigate("/lookup");
       } else {
@@ -35,10 +35,26 @@ export default function Home() {
   };
 
   return (
-    <div className="card" style={{ maxWidth: "400px", margin: "0 auto", padding: "20px", textAlign: "center" }}>
-      <h4 className="title">Log In!</h4>
+    <div
+      className="card"
+      style={{
+        maxWidth: "400px",
+        margin: "0 auto",
+        padding: "20px",
+        textAlign: "center",
+      }}
+    >
+      <h4 className="title">LOGIN! - JOAO VITOR ISHIKAWA ONOFRIO</h4>
       <form onSubmit={handleLogin}>
-        <div className="field" style={{ marginBottom: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div
+          className="field"
+          style={{
+            marginBottom: "10px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <svg
             style={{ width: "20px", height: "20px", marginRight: "8px" }}
             className="input-icon"
@@ -54,10 +70,23 @@ export default function Home() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
-            style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px", flex: "1" }}
+            style={{
+              padding: "10px",
+              border: "1px solid #ccc",
+              borderRadius: "5px",
+              flex: "1",
+            }}
           />
         </div>
-        <div className="field" style={{ marginBottom: "10px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div
+          className="field"
+          style={{
+            marginBottom: "10px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <svg
             style={{ width: "20px", height: "20px", marginRight: "8px" }}
             className="input-icon"
@@ -73,13 +102,25 @@ export default function Home() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            style={{ padding: "10px", border: "1px solid #ccc", borderRadius: "5px", flex: "1" }}
+            style={{
+              padding: "10px",
+              border: "1px solid #ccc",
+              borderRadius: "5px",
+              flex: "1",
+            }}
           />
         </div>
         <button
           className="btn"
           type="submit"
-          style={{ padding: "10px 20px", backgroundColor: "blue", color: "white", border: "none", borderRadius: "5px", cursor: "pointer" }}
+          style={{
+            padding: "10px 20px",
+            backgroundColor: "blue",
+            color: "white",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+          }}
         >
           Login
         </button>

@@ -1,3 +1,4 @@
+// src/context/UserContext.tsx
 import { createContext, useState, ReactNode } from "react";
 export type AuthUser = { username: string, password: string } | { cpf: string; name: string };
 

@@ -3,6 +3,7 @@ import CPFSearch from "./components/CPFSearch";
 import Home from "./components/Home";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { UserProvider } from "./context/UserContext";
+import UserManager from "./components/UserManager"; 
 
 function AppContent() {
   const location = useLocation();
@@ -13,7 +14,8 @@ function AppContent() {
       {showNav && (
         <nav className="mb-4">
           <Link to="/" className="mr-4 text-blue-500">Home</Link>
-          <Link to="/lookup" className="text-blue-500">Lookup User</Link>
+          <Link to="/lookup" className="mr-4 text-blue-500">Lookup User</Link>
+          <Link to="/users" className="text-blue-500">User Manager</Link> 
         </nav>
       )}
       <Routes>
@@ -23,6 +25,14 @@ function AppContent() {
           element={
             <ProtectedRoute>
               <CPFSearch />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/users"
+          element={
+            <ProtectedRoute>
+              <UserManager />
             </ProtectedRoute>
           }
         />

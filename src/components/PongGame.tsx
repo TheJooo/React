@@ -1,22 +1,17 @@
-// PongGame.tsx
 import React, { useEffect, useRef } from 'react';
 
 const PongGame: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const requestRef = useRef<number>(0);
 
-  // Game settings
   const canvasWidth = 600;
   const canvasHeight = 400;
   const paddleWidth = 10;
   const paddleHeight = 80;
   const ballSize = 10;
 
-  // Initial speeds
   const initialBallSpeedX = 2;
   const initialBallSpeedY = 1;
-
-  // Mutable game variables using refs
   const playerY = useRef(canvasHeight / 2 - paddleHeight / 2);
   const computerY = useRef(canvasHeight / 2 - paddleHeight / 2);
   const ballX = useRef(canvasWidth / 2 - ballSize / 2);
@@ -24,7 +19,6 @@ const PongGame: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const ballSpeedX = useRef(initialBallSpeedX);
   const ballSpeedY = useRef(initialBallSpeedY);
 
-  // Track pressed keys for player's paddle
   const keysPressed = useRef<{ [key: string]: boolean }>({});
 
   const gameLoop = () => {
@@ -33,31 +27,24 @@ const PongGame: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Clear canvas
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
-    // Draw player paddle (blue)
     ctx.fillStyle = 'blue';
     ctx.fillRect(10, playerY.current, paddleWidth, paddleHeight);
 
-    // Draw computer paddle (red)
     ctx.fillStyle = 'red';
     ctx.fillRect(canvasWidth - paddleWidth - 10, computerY.current, paddleWidth, paddleHeight);
 
-    // Draw ball (green)
     ctx.fillStyle = 'green';
     ctx.fillRect(ballX.current, ballY.current, ballSize, ballSize);
 
-    // Update ball position
     ballX.current += ballSpeedX.current;
     ballY.current += ballSpeedY.current;
 
-    // Bounce off top/bottom walls
     if (ballY.current <= 0 || ballY.current + ballSize >= canvasHeight) {
       ballSpeedY.current = -ballSpeedY.current;
     }
 
-    // Update player's paddle based on arrow keys
     const playerSpeed = 5;
     if (keysPressed.current['ArrowUp']) {
       playerY.current -= playerSpeed;
@@ -65,11 +52,9 @@ const PongGame: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     if (keysPressed.current['ArrowDown']) {
       playerY.current += playerSpeed;
     }
-    // Clamp player's paddle within canvas
     if (playerY.current < 0) playerY.current = 0;
     if (playerY.current > canvasHeight - paddleHeight) playerY.current = canvasHeight - paddleHeight;
 
-    // Update computer paddle with limited AI and deadzone
     const computerSpeed = 3;
     const computerCenter = computerY.current + paddleHeight / 2;
     const ballCenter = ballY.current + ballSize / 2;
@@ -88,16 +73,12 @@ const PongGame: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       ballY.current + ballSize >= playerY.current &&
       ballY.current <= playerY.current + paddleHeight
     ) {
-      // Calculate difference between ball center and paddle center
       const diff = (ballY.current + ballSize / 2) - (playerY.current + paddleHeight / 2);
-      // Adjust ball's vertical speed based on collision point
       ballSpeedY.current = diff * 0.15;
-      // Reverse horizontal direction
       ballSpeedX.current = -ballSpeedX.current;
-      ballX.current = 10 + paddleWidth; // reposition ball to avoid sticking
+      ballX.current = 10 + paddleWidth; 
     }
 
-    // Collision with computer paddle
     if (
       ballX.current + ballSize >= canvasWidth - paddleWidth - 10 &&
       ballY.current + ballSize >= computerY.current &&
@@ -121,7 +102,6 @@ const PongGame: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   useEffect(() => {
     requestRef.current = requestAnimationFrame(gameLoop);
 
-    // Add keyboard event listeners
     const handleKeyDown = (e: KeyboardEvent) => {
       keysPressed.current[e.key] = true;
     };
